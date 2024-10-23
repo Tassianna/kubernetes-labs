@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: configmap-volume-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: configmap-volume
+  template:
+    metadata:
+      labels:
+        app: configmap-volume
+    spec:
+      containers:
+      - name: app-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config

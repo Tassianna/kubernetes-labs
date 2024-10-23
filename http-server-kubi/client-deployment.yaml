@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: http-client
+  template:
+    metadata:
+      labels:
+        app: http-client
+    spec:
+      containers:
+      - name: http-client
+        image: appropriate/curl
+        env:
+        - name: HTTP_SERVER_SERVICE_HOST
+          value: http-server-service
+        command: ["/bin/sh"]
+        args:
+        - "-c"
+        - |
+          while true; do
+            echo "Requesting the server..."
+            curl http://$(HTTP_SERVER_SERVICE_HOST)
+            sleep 5
+          done

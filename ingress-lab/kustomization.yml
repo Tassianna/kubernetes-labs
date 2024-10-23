@@ -1,0 +1,4 @@
+resources:
+  - nginx-app1.yml
+  - nginx-app2.yml
+  - ingress.yml
